@@ -1,18 +1,11 @@
-import { useState } from 'react'
-import './App.css'
+import TodoApp from "./components/TodoApp";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-      </div>
-      <p className="text-5xl">
-        Testing
-      </p>
-    </>
-  )
+    <main className="min-h-screen bg-gray-100">
+        <TodoApp />
+    </main>
+  );
 }
 
-export default App
+export default App;

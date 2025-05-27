@@ -5,8 +5,11 @@ content: [
   "./src/**/*.{js,ts,jsx,tsx}",
 ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+      sans: ['DMSans', 'sans-serif'],
+    },
   },
   plugins: [],
+  }
 }
-
