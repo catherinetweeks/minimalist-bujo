@@ -3,5 +3,4 @@ export type Todo = {
   text: string;
   completed: boolean;
   notes?: string;
-  date?: Date;
 };
