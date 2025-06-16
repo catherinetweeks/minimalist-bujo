@@ -34,42 +34,13 @@ const HomePage = () => {
   };
 
 
-  // these are the dummy tasks, remove these later but they are for testing.
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: "1",
-      title: "Work on mini bujo",
-      description: "Get a good amount done on your web app queen!",
-      date: "2025-06-13",
-      completed: false,
-    },
-    {
-      id: "2",
-      title: "journal",
-      description: "remember to journal this evening! You didn't yesterday so get a move on.",
-      date: "2025-06-13",
-      completed: true,
-    },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-  const [notes] = useState<Note[]>([
-    {
-      id: "n1",
-      title: "Quote of the day",
-      description: "“Clarity about what matters provides clarity about what does not.”",
-      date: "2025-06-13",
-    },
-  ]);
+  const [notes] = useState<Note[]>([]);
 
   return (
     <div className="flex flex-col items-center p-8">
       <h1 className="text-3xl font-bold mb-5">Entries</h1>
-          <button
-            onClick={handleAddTask}
-            className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-          >
-            + Add Task
-          </button>
       {/* tasks */}
       <div className="w-full max-w-md mb-8">
         {tasks.map((task) => (
@@ -125,7 +96,12 @@ const HomePage = () => {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <TaskEditor initialTask={editingTask || undefined} onSave={handleSaveTask} />
       </Modal>
-
+      <button
+        onClick={handleAddTask}
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        >
+        + Add Task
+      </button>
     </div>
   );
 };
