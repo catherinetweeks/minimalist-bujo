@@ -1,77 +1,98 @@
 import { useState } from "react";
-import { type Task, type Note } from "../types";
+import { type Entry } from "../types";
 
 import Modal from "../components/Modal";
 import TaskEditor from "../components/TaskEditor";
+import NoteEditor from "../components/NoteEditor";
 
 const HomePage = () => {
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  // const [editingTask, setEditingTask] = useState<Task | null>(null);
+  // const [editingNote, setEditingNote] = useState<Task | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSaveTask = (task: Task) => {
-    setTasks((prev) => {
-      const exists = prev.find((t) => t.id === task.id);
-      return exists
-        ? prev.map((t) => (t.id === task.id ? task : t))
-        : [...prev, task];
-    });
-    setIsModalOpen(false);
-    setEditingTask(null);
-  };
+const handleSaveEntry = (entry: Entry) => {
+  setEntries((prev) => {
+    const exists = prev.find((e) => e.id === entry.id);
+    return exists
+      ? prev.map((e) => (e.id === entry.id ? entry : e))
+      : [...prev, entry];
+  });
+  setIsModalOpen(false);
+  setEditingEntry(null);
+};
 
-  const handleEditTask = (task: Task) => {
-    setEditingTask(task);
-    setIsModalOpen(true);
-  };
+const handleEditEntry = (entry: Entry) => {
+  setEditingEntry(entry);
+  setIsModalOpen(true);
+};
 
-  const handleAddTask = () => {
-    setEditingTask(null);
-    setIsModalOpen(true);
-  };
+const handleAddTask = () => {
+  setEditingEntry({
+    id: Date.now().toString(),
+    title: "",
+    description: "",
+    date: new Date().toISOString().split("T")[0],
+    completed: false,
+    type: "task",
+  });
+  setIsModalOpen(true);
+};
 
-  const handleDeleteTask = (id: string) => {
-    setTasks((prev) => prev.filter((t)=>t.id !== id));
-  };
+const handleAddNote = () => {
+  setEditingEntry({
+    id: Date.now().toString(),
+    title: "",
+    description: "",
+    date: new Date().toISOString().split("T")[0],
+    type: "note",
+  });
+  setIsModalOpen(true);
+};
 
 
-  const [tasks, setTasks] = useState<Task[]>([]);
-
-  const [notes] = useState<Note[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
   return (
     <div className="flex flex-col items-center p-8">
       <h1 className="text-3xl font-bold mb-5">Entries</h1>
       {/* tasks */}
       <div className="w-full max-w-md mb-8">
-        {tasks.map((task) => (
+        {entries.map((entry) => (
           <div
-            key={task.id}
+            key={entry.id}
             className="bg-white rounded-xl p-4 mb-2 shadow flex justify-between items-center cursor-pointer"
-            onClick={() => handleEditTask(task)}
+            onClick={() => handleEditEntry(entry)}
           >
             <div>
-              <h3 className="font-medium">{task.title}</h3>
-              <p className="text-sm text-gray-600">{task.description}</p>
-              <p className="text-xs text-gray-400">{task.date}</p>
+              <h3 className="font-medium">{entry.title}</h3>
+              <p className="text-sm text-gray-600">{entry.description}</p>
+              <p className="text-xs text-gray-400">{entry.date}</p>
             </div>
+
             <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={(e) => {
-                  e.stopPropagation(); // prevents modal from opening
-                  setTasks((prev) =>
-                    prev.map((t) =>
-                      t.id === task.id ? { ...t, completed: !t.completed } : t
-                    )
-                  );
-                }}
-              />
+              {entry.type === "task" && (
+                <input
+                  type="checkbox"
+                  checked={entry.completed}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setEntries((prev) =>
+                      prev.map((t) =>
+                        t.id === entry.id && t.type === "task"
+                          ? { ...t, completed: !t.completed }
+                          : t
+                      )
+                    );
+                  }}
+                />
+              )}
+
               <button
                 className="text-red-500 text-sm hover:underline"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDeleteTask(task.id);
+                  setEntries((prev) => prev.filter((e) => e.id !== entry.id));
                 }}
               >
                 Delete
@@ -80,27 +101,33 @@ const HomePage = () => {
           </div>
         ))}
 
-        {notes.map((note) => (
-          <div
-            key={note.id}
-            className="bg-gray-100 rounded-xl p-4 mb-2 flex justify-between items-center"
-          >
-            <div>
-              <h3 className="font-medium">{note.title}</h3>
-              <p className="text-sm text-gray-600">{note.description}</p>
-              <p className="text-xs text-gray-400">{note.date}</p>
-            </div>
-          </div>
-        ))}
+
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <TaskEditor initialTask={editingTask || undefined} onSave={handleSaveTask} />
+        {editingEntry?.type === "note" ? (
+          <NoteEditor
+            initialNote={editingEntry.type === "note" ? editingEntry : undefined}
+            onSave={handleSaveEntry}
+          />
+        ) : (
+          <TaskEditor
+            initialTask={editingEntry?.type === "task" ? editingEntry : undefined}
+            onSave={handleSaveEntry}
+          />
+        )}
       </Modal>
+
       <button
         onClick={handleAddTask}
-        className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
         >
         + Add Task
+      </button>
+            <button
+        onClick={handleAddNote}
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+        >
+        + Add Note
       </button>
     </div>
   );

@@ -1,12 +1,17 @@
-export type EntryType = "task" | "note";
+export type BaseEntry = {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+};
 
-export interface Note {
-    id: string;
-    title: string;
-    description: string;
-    date: string;
-}
+export type Task = BaseEntry & {
+  type: "task";
+  completed: boolean;
+};
 
-export interface Task extends Note{
-    completed: boolean;
-}
+export type Note = BaseEntry & {
+  type: "note";
+};
+
+export type Entry = Task | Note;

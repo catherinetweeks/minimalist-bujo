@@ -1,37 +1,36 @@
 import { useState, useEffect } from "react";
-import { type Task } from "../types";
+import { type Note } from "../types";
 
 interface Props {
-  initialTask?: Task;
-  onSave: (task: Task) => void;
+  initialNote?: Note;
+  onSave: (note: Note) => void;
 }
 
-const TaskEditor = ({ initialTask, onSave }: Props) => {
+const NoteEditor = ({ initialNote, onSave }: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
 
   useEffect(() => {
-    if (initialTask) {
-      setTitle(initialTask.title);
-      setDescription(initialTask.description);
-      setDate(initialTask.date);
+    if (initialNote) {
+      setTitle(initialNote.title);
+      setDescription(initialNote.description);
+      setDate(initialNote.date);
     } else {
       const today = new Date().toISOString().split("T")[0];
       setDate(today);
     }
-  }, [initialTask]);
+  }, [initialNote]);
 
   const handleSubmit = () => {
-    const newTask: Task = {
-      id: initialTask?.id || Date.now().toString(),
+    const newNote: Note = {
+      id: initialNote?.id || Date.now().toString(),
       title,
       description,
       date,
-      completed: initialTask?.completed ?? false,
-      type: "task", // 👈 ADD THIS
+      type: "note", // ✅ critical line
     };
-    onSave(newTask);
+    onSave(newNote);
   };
 
   return (
@@ -65,4 +64,4 @@ const TaskEditor = ({ initialTask, onSave }: Props) => {
   );
 };
 
-export default TaskEditor;
+export default NoteEditor;
