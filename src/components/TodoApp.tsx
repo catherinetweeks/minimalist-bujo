@@ -58,7 +58,13 @@ const handleAddNote = () => {
           <div
             key={entry.id}
             className="bg-white rounded-xl p-4 mb-2 shadow flex justify-between items-center cursor-pointer"
-            onClick={() => handleEditEntry(entry)}
+            // conditional click handler - won't propagate modal if checking off task
+            onClick={(e) => {
+              const target = e.target as HTMLElement;
+              if (target.tagName !== 'INPUT' && target.tagName !== 'BUTTON') {
+                handleEditEntry(entry);
+              }
+            }}
           >
             <div>
               <h3 className="font-medium">{entry.title}</h3>
