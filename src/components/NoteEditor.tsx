@@ -28,7 +28,7 @@ const NoteEditor = ({ initialNote, onSave }: Props) => {
       title,
       description,
       date,
-      type: "note", // ✅ critical line
+      type: "note",
     };
     onSave(newNote);
   };

@@ -6,8 +6,6 @@ import TaskEditor from "../components/TaskEditor";
 import NoteEditor from "../components/NoteEditor";
 
 const HomePage = () => {
-  // const [editingTask, setEditingTask] = useState<Task | null>(null);
-  // const [editingNote, setEditingNote] = useState<Task | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 const handleSaveEntry = (entry: Entry) => {
@@ -31,7 +29,7 @@ const handleAddTask = () => {
     id: Date.now().toString(),
     title: "",
     description: "",
-    date: new Date().toISOString().split("T")[0],
+    date: "",
     completed: false,
     type: "task",
   });
@@ -43,12 +41,11 @@ const handleAddNote = () => {
     id: Date.now().toString(),
     title: "",
     description: "",
-    date: new Date().toISOString().split("T")[0],
+    date: "",
     type: "note",
   });
   setIsModalOpen(true);
 };
-
 
   const [entries, setEntries] = useState<Entry[]>([]);
   const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
@@ -56,7 +53,6 @@ const handleAddNote = () => {
   return (
     <div className="flex flex-col items-center p-8">
       <h1 className="text-3xl font-bold mb-5">Entries</h1>
-      {/* tasks */}
       <div className="w-full max-w-md mb-8">
         {entries.map((entry) => (
           <div
@@ -69,7 +65,6 @@ const handleAddNote = () => {
               <p className="text-sm text-gray-600">{entry.description}</p>
               <p className="text-xs text-gray-400">{entry.date}</p>
             </div>
-
             <div className="flex items-center gap-2">
               {entry.type === "task" && (
                 <input
@@ -101,7 +96,6 @@ const handleAddNote = () => {
           </div>
         ))}
 
-
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {editingEntry?.type === "note" ? (
@@ -117,18 +111,20 @@ const handleAddNote = () => {
         )}
       </Modal>
 
-      <button
-        onClick={handleAddTask}
-        className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+      <div className="flex flex-col fixed bottom-10 right-10">
+        <button
+          onClick={handleAddTask}
+          className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+          >
+          + Add Task
+        </button>
+        <button
+          onClick={handleAddNote}
+          className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
         >
-        + Add Task
-      </button>
-            <button
-        onClick={handleAddNote}
-        className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
-        >
-        + Add Note
-      </button>
+          + Add Note
+        </button>
+      </div>
     </div>
   );
 };

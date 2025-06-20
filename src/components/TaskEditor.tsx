@@ -29,7 +29,7 @@ const TaskEditor = ({ initialTask, onSave }: Props) => {
       description,
       date,
       completed: initialTask?.completed ?? false,
-      type: "task", // 👈 ADD THIS
+      type: "task",
     };
     onSave(newTask);
   };
