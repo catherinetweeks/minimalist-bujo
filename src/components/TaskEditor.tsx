@@ -4,9 +4,10 @@ import { type Task } from "../types";
 interface Props {
   initialTask?: Task;
   onSave: (task: Task) => void;
+  onDelete?: (id: string) => void;
 }
 
-const TaskEditor = ({ initialTask, onSave }: Props) => {
+const TaskEditor = ({ initialTask, onSave, onDelete }: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -78,6 +79,16 @@ const TaskEditor = ({ initialTask, onSave }: Props) => {
         >
           Save
         </button>
+        {initialTask && onDelete && (
+          <button
+            type="button"
+            onClick={() => onDelete(initialTask.id)}
+            className="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600 mt-2"
+          >
+            Delete Task
+          </button>
+        )}
+
       </form>
     </div>
   );

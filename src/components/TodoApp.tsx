@@ -30,8 +30,8 @@ const handleAddTask = () => {
     title: "",
     description: "",
     date: "",
-    completed: false,
     type: "task",
+    completed: false,
   });
   setIsModalOpen(true);
 };
@@ -57,7 +57,7 @@ const handleAddNote = () => {
         {entries.map((entry) => (
           <div
             key={entry.id}
-            className="bg-white rounded-xl p-4 mb-2 shadow flex justify-between items-center cursor-pointer"
+            className="bg-white rounded-xl p-4 mb-2 shadow flex justify-between items-center cursor-pointer hover:bg-slate-100"
             // conditional click handler - won't propagate modal if checking off task
             onClick={(e) => {
               const target = e.target as HTMLElement;
@@ -88,16 +88,6 @@ const handleAddNote = () => {
                   }}
                 />
               )}
-
-              <button
-                className="text-red-500 text-sm hover:underline"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setEntries((prev) => prev.filter((e) => e.id !== entry.id));
-                }}
-              >
-                Delete
-              </button>
             </div>
           </div>
         ))}
@@ -108,11 +98,21 @@ const handleAddNote = () => {
           <NoteEditor
             initialNote={editingEntry.type === "note" ? editingEntry : undefined}
             onSave={handleSaveEntry}
+            onDelete={(id) => {
+              setEntries((prev) => prev.filter((e) => e.id !== id));
+              setIsModalOpen(false);
+              setEditingEntry(null);
+            }}
           />
         ) : (
           <TaskEditor
             initialTask={editingEntry?.type === "task" ? editingEntry : undefined}
             onSave={handleSaveEntry}
+            onDelete={(id) => {
+              setEntries((prev) => prev.filter((e) => e.id !== id));
+              setIsModalOpen(false);
+              setEditingEntry(null);
+            }}
           />
         )}
       </Modal>

@@ -4,9 +4,10 @@ import { type Note } from "../types";
 interface Props {
   initialNote?: Note;
   onSave: (note: Note) => void;
+  onDelete?: (id: string) => void;
 }
 
-const NoteEditor = ({ initialNote, onSave }: Props) => {
+const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -75,6 +76,16 @@ const NoteEditor = ({ initialNote, onSave }: Props) => {
         >
           Save
         </button>
+
+        {initialNote && onDelete && (
+        <button
+            type="button"
+            onClick={() => onDelete(initialNote.id)}
+            className="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600 mt-2"
+          >
+            Delete Note
+          </button>
+        )}
       </form>
     </div>
   );
