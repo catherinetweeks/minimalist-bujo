@@ -120,13 +120,13 @@ const handleAddNote = () => {
       <div className="flex flex-col fixed bottom-10 right-10">
         <button
           onClick={handleAddTask}
-          className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+          className="mb-4 px-4 py-2 text-black hover:underline"
           >
           + Add Task
         </button>
         <button
           onClick={handleAddNote}
-          className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+          className="mb-4 px-4 py-2 text-black hover:underline"
         >
           + Add Note
         </button>

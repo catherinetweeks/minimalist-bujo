@@ -73,21 +73,23 @@ const TaskEditor = ({ initialTask, onSave, onDelete }: Props) => {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-500"
-        >
-          Save
-        </button>
-        {initialTask && onDelete && (
+        <div className="flex flex-row gap-3">
           <button
-            type="button"
-            onClick={() => onDelete(initialTask.id)}
-            className="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600 mt-2"
+            onClick={handleSubmit}
+            className="text-black px-4 py-2 hover:underline"
           >
-            Delete Task
+            Save
           </button>
-        )}
+          {initialTask && onDelete && (
+            <button
+              type="button"
+              onClick={() => onDelete(initialTask.id)}
+              className="text-black px-4 py-2 hover:underline"
+            >
+              Delete Task
+            </button>
+          )}
+        </div>
 
       </form>
     </div>

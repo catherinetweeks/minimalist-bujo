@@ -70,22 +70,24 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-300 text-white px-4 py-2 rounded hover:bg-blue-500"
-        >
-          Save
-        </button>
-
-        {initialNote && onDelete && (
-        <button
-            type="button"
-            onClick={() => onDelete(initialNote.id)}
-            className="bg-red-400 text-white px-4 py-2 rounded hover:bg-red-600 mt-2"
+        <div className="flex flex-row gap-3">
+          <button
+            onClick={handleSubmit}
+            className="text-black px-4 py-2 hover:underline"
           >
-            Delete Note
+            Save
           </button>
-        )}
+
+          {initialNote && onDelete && (
+          <button
+              type="button"
+              onClick={() => onDelete(initialNote.id)}
+              className="text-black px-4 py-2 hover:underline"
+            >
+              Delete Note
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
