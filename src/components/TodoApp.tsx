@@ -52,7 +52,7 @@ const handleAddNote = () => {
 
   return (
     <div className="flex flex-col items-center p-8">
-      <h1 className="text-3xl font-bold mb-5">Entries</h1>
+      <h1 className="text-3xl font-semibold mb-5 mt-10">Current Entries</h1>
       <div className="w-full max-w-md mb-8">
         {entries.map((entry) => (
           <div
@@ -67,13 +67,31 @@ const handleAddNote = () => {
             }}
           >
             <div>
-              <h3 className="font-medium">{entry.title}</h3>
-              <p className="text-sm text-gray-600">{entry.description}</p>
-              <p className="text-xs text-gray-400">{entry.date}</p>
+              <h3
+                className={`font-medium ${
+                  entry.type === "task" && entry.completed ? "line-through text-gray-400" : ""
+                }`}
+              >
+                {entry.title}
+              </h3>
+              <p
+                className={`text-sm ${
+                  entry.type === "task" && entry.completed ? "text-gray-400 line-through" : "text-gray-600"
+                }`}
+              >
+                {entry.description}
+              </p>
+              <p
+                className={`text-xs ${
+                  entry.type === "task" && entry.completed ? "text-gray-300 line-through" : "text-gray-400"
+                }`}
+              >
+                {entry.date}
+              </p>
             </div>
             <div className="flex items-center gap-2">
               {entry.type === "task" && (
-                <input
+                <input className="ml-2"
                   type="checkbox"
                   checked={entry.completed}
                   onChange={(e) => {
@@ -130,6 +148,12 @@ const handleAddNote = () => {
         >
           + Add Note
         </button>
+        <label className="flex items-center cursor-pointer">
+          <input type="checkbox" className="peer sr-only" />
+          <div className="w-5 h-5 border-2 border-gray-300 rounded-full bg-white peer-checked:bg-black peer-checked:border-black flex items-center justify-center">
+          </div>
+        </label>
+
       </div>
     </div>
   );
