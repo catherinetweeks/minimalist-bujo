@@ -54,11 +54,15 @@ const handleAddNote = () => {
     <div className="flex flex-col items-center p-8">
       <h1 className="text-3xl font-semibold mb-5 mt-10">Current Entries</h1>
       <div className="w-full max-w-md mb-8">
-        {entries.map((entry) => (
+        {entries.length === 0 ? (
+          <p className="text-center text-gray-400 italic">
+            Add a task to get started ~
+          </p>
+        ) : (
+          entries.map((entry) => (
           <div
             key={entry.id}
-            className="bg-white rounded-xl p-4 mb-2 shadow flex justify-between items-center cursor-pointer hover:bg-slate-100"
-            // conditional click handler - won't propagate modal if checking off task
+            className="rounded-xl p-4 mb-1 flex items-start gap-4 cursor-pointer hover:bg-slate-50"
             onClick={(e) => {
               const target = e.target as HTMLElement;
               if (target.tagName !== 'INPUT' && target.tagName !== 'BUTTON') {
@@ -66,7 +70,27 @@ const handleAddNote = () => {
               }
             }}
           >
-            <div>
+            {entry.type === "task" ? (
+              <input
+                type="checkbox"
+                checked={entry.completed}
+                onChange={(e) => {
+                  e.stopPropagation();
+                  setEntries((prev) =>
+                    prev.map((t) =>
+                      t.id === entry.id && t.type === "task"
+                        ? { ...t, completed: !t.completed }
+                        : t
+                    )
+                  );
+                }}
+                  className="w-4 h-4 accent-black mt-1"
+              />
+            ): (
+              <p className="font-bold">—</p>
+            )}
+
+            <div className="flex-1">
               <h3
                 className={`font-medium ${
                   entry.type === "task" && entry.completed ? "line-through text-gray-400" : ""
@@ -89,26 +113,8 @@ const handleAddNote = () => {
                 {entry.date}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              {entry.type === "task" && (
-                <input className="ml-2"
-                  type="checkbox"
-                  checked={entry.completed}
-                  onChange={(e) => {
-                    e.stopPropagation();
-                    setEntries((prev) =>
-                      prev.map((t) =>
-                        t.id === entry.id && t.type === "task"
-                          ? { ...t, completed: !t.completed }
-                          : t
-                      )
-                    );
-                  }}
-                />
-              )}
-            </div>
           </div>
-        ))}
+        )))}
 
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -148,15 +154,15 @@ const handleAddNote = () => {
         >
           + Add Note
         </button>
-        <label className="flex items-center cursor-pointer">
-          <input type="checkbox" className="peer sr-only" />
-          <div className="w-5 h-5 border-2 border-gray-300 rounded-full bg-white peer-checked:bg-black peer-checked:border-black flex items-center justify-center">
-          </div>
-        </label>
-
       </div>
     </div>
   );
 };
 
 export default HomePage;
+
+        // <label className="flex items-center cursor-pointer">
+        //   <input type="checkbox" className="peer sr-only" />
+        //   <div className="w-5 h-5 border-2 border-gray-300 rounded-full bg-white hover:bg-gray-300 peer-checked:bg-gray-400 peer-checked:border-gray-400 flex items-center justify-center">
+        //   </div>
+        // </label>
