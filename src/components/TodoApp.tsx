@@ -54,24 +54,24 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
   return (
     <div className="flex flex-col items-center p-8">
-      <div className="flex flex-row items-center gap-2 p-5">
-        <h1 className="text-5xl mb-10 mt-10 font-titleFont hover:-translate-y-0.5 transition-all">
+      <div className="flex flex-row items-center gap-2 p-6 mt-5">
+        <h1 className="text-5xl mb-5 mt-2 font-titleFont hover:-translate-y-0.5 transition-all">
           Your Entries
         </h1>
         <div className="relative">
           <button
             onClick={() => handleAddTask()}
-            className="mb-2 p-2 bg-white text-black rounded flex items-center justify-center w-10 h-10 shrink-0"
+            className="mb-2 p-2 bg-white text-black rounded flex items-center justify-center w-15 h-15 shrink-0"
           >
             <img
               src={addEntry}
               alt="Add Entry"
-              className="w-10 h-10 object-contain pointer-events-none hover:-translate-y-0.5 transition-all"
+              className="w-9 h-9 object-contain pointer-events-none hover:-translate-y-0.5 transition-all"
             />
           </button>
         </div>
       </div>
-      <div className="w-full max-w-md mb-8">
+      <div className="w-full max-w-lg mb-8">
         {entries.length === 0 ? (
           <p className="text-center text-gray-400 italic">
             Add a task to get started ~
