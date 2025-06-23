@@ -5,11 +5,23 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-      // extend: {
-      //   fontFamily: {
-      //     sans: ["'Quicksand'", "sans-serif"],
-      //   },
-      // },
+      extend: {
+        fontFamily: {
+          sans: ["'Inter'", "sans-serif"],
+        },
+      },
+      
+      extend: {
+        fontFamily: {
+          grotesque: ["'Bricolage Grotesque'", "sans-serif"],
+        },
+      },
+
+      extend: {
+        fontFamily: {
+          titleFont: ["'DM Sans'", "sans-serif"]
+        },
+      },
     },
     plugins: [],
   };

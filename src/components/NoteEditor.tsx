@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { type Note } from "../types";
+import deleteIcon from '../assets/trash.svg';
+import saveIcon from '../assets/save.svg';
 
 interface Props {
   initialNote?: Note;
@@ -21,6 +23,7 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
       const today = new Date().toISOString().split("T")[0];
       setDate(today);
     }
+    titleInputRef.current?.focus();
   }, [initialNote]);
 
   const [error, setError] = useState("");
@@ -42,6 +45,8 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
     onSave(newNote);
   };
 
+  const titleInputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div>
       {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -52,21 +57,22 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
         }}
       >
         <input
+          ref={titleInputRef}
           type="text"
           placeholder="Title"
-          className="border p-2 rounded"
+          className="bg-transparent border-none focus:outline-none placeholder-gray-400 text-lg p-2"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
           placeholder="Description"
-          className="border p-2 rounded"
+          className="bg-transparent border-none focus:outline-none placeholder-gray-400 p-2 resize-none"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
         <input
           type="date"
-          className="border p-2 rounded"
+          className="bg-transparent border-none focus:outline-none text-sm text-gray-700 p-2"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
@@ -75,7 +81,11 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
             onClick={handleSubmit}
             className="text-black px-4 py-2 hover:underline"
           >
-            Save
+            <img
+              src={saveIcon}
+              alt="Save"
+              className="w-5 h-5 cursor-pointer"
+            />
           </button>
 
           {initialNote && onDelete && (
@@ -84,7 +94,11 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
               onClick={() => onDelete(initialNote.id)}
               className="text-black px-4 py-2 hover:underline"
             >
-              Delete Note
+            <img
+              src={deleteIcon}
+              alt="Delete"
+              className="w-5 h-5 cursor-pointer"
+            />
             </button>
           )}
         </div>
