@@ -54,8 +54,10 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
   return (
     <div className="flex flex-col items-center p-8">
-      <div className="flex flex-row items-center gap-5">
-        <h1 className="text-5xl mb-5 mt-10 font-titleFont hover:-translate-y-1 transition-all">Your Entries</h1>
+      <div className="flex flex-row items-center gap-2 p-5">
+        <h1 className="text-5xl mb-10 mt-10 font-titleFont hover:-translate-y-0.5 transition-all">
+          Your Entries
+        </h1>
         <div className="relative">
           <button
             onClick={() => handleAddTask()}
@@ -64,7 +66,7 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
             <img
               src={addEntry}
               alt="Add Entry"
-              className="w-6 h-6 object-contain pointer-events-none hover:-translate-y-0.5 transition-all"
+              className="w-10 h-10 object-contain pointer-events-none hover:-translate-y-0.5 transition-all"
             />
           </button>
         </div>
