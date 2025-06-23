@@ -55,7 +55,7 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
   return (
     <div className="flex flex-col items-center p-8">
       <div className="flex flex-row items-center gap-5">
-        <h1 className="text-5xl mb-5 mt-10 font-titleFont hover:-translate-y-1 transition-all">Current Entries</h1>
+        <h1 className="text-5xl mb-5 mt-10 font-titleFont hover:-translate-y-1 transition-all">Your Entries</h1>
         <div className="relative">
           <button
             onClick={() => handleAddTask()}
@@ -67,28 +67,6 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
               className="w-6 h-6 object-contain pointer-events-none hover:-translate-y-0.5 transition-all"
             />
           </button>
-          {/* {showTypeToggle && (
-            <div className="absolute mt-2 bg-white rounded-lg shadow-md p-2 z-50 w-28">
-              <button
-                onClick={() => {
-                  handleAddTask();
-                  setShowTypeToggle(false);
-                }}
-                className="w-full text-left px-2 py-1 hover:bg-gray-100 rounded"
-              >
-                Task
-              </button>
-              <button
-                onClick={() => {
-                  handleAddNote();
-                  setShowTypeToggle(false);
-                }}
-                className="w-full text-left px-2 py-1 hover:bg-gray-100 rounded"
-              >
-                Note
-              </button>
-            </div>
-          )} */}
         </div>
       </div>
       <div className="w-full max-w-md mb-8">
@@ -168,7 +146,7 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
               className={`px-3 py-1 rounded ${
                 editingEntry?.type === "task"
                   ? "bg-black text-white"
-                  : "bg-gray-200 text-black"
+                  : "bg-white text-black"
               }`}
             >
               Task
@@ -182,7 +160,7 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
               className={`px-3 py-1 rounded ${
                 editingEntry?.type === "note"
                   ? "bg-black text-white"
-                  : "bg-gray-200 text-black"
+                  : "bg-white text-black"
               }`}
             >
               Note

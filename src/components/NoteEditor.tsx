@@ -76,7 +76,7 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-        <div className="flex flex-row gap-3">
+        <div className="flex flex-row gap-2">
           <button
             onClick={handleSubmit}
             className="text-black px-4 py-2 hover:underline"
@@ -84,7 +84,7 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
             <img
               src={saveIcon}
               alt="Save"
-              className="w-5 h-5 cursor-pointer"
+              className="w-5 h-5 cursor-pointer hover:-translate-y-0.5 transition-all"
             />
           </button>
 
@@ -97,7 +97,7 @@ const NoteEditor = ({ initialNote, onSave, onDelete }: Props) => {
             <img
               src={deleteIcon}
               alt="Delete"
-              className="w-5 h-5 cursor-pointer"
+              className="w-5 h-5 cursor-pointer hover:-translate-y-0.5 transition-all"
             />
             </button>
           )}
