@@ -4,6 +4,7 @@ import { type Entry } from "../types";
 import Modal from "../components/Modal";
 import TaskEditor from "../components/TaskEditor";
 import NoteEditor from "../components/NoteEditor";
+import Dropdown from "../components/Dropdown";
 
 import addEntry from "../assets/addEntry.svg";
 
@@ -76,23 +77,19 @@ const [sortBy, setSortBy] = useState<"dateAdded" | "taskDate">("dateAdded");
         </div>
       </div>
       <div className="flex justify-between mb-4 w-full max-w-xs p-3 appearance-none">
-        <select
-          className="p-1 rounded-xl bg-black text-white text-center appearance-none"
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
-        >
-          <option value="all">All</option>
-          <option value="completed">Completed</option>
-          <option value="incomplete">Incomplete</option>
-        </select>
-        <select
-          className="border p-1 rounded"
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-        >
-          <option value="dateAdded">Date Added</option>
-          <option value="taskDate">Date Due</option>
-        </select>
+        <div className="flex justify-between mb-4 w-full max-w-lg gap-4">
+          <Dropdown
+            options={["all", "completed", "incomplete"]}
+            value={filterStatus}
+            onChange={(val) => setFilterStatus(val as typeof filterStatus)}
+          />
+
+          <Dropdown
+            options={["dateAdded", "taskDate"]}
+            value={sortBy}
+            onChange={(val) => setSortBy(val as typeof sortBy)}
+          />
+        </div>
       </div>
         <div className="w-full max-w-lg mb-8">
           {entries.length === 0 ? (
