@@ -55,7 +55,7 @@ const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
 // for sorting and filters
 const [filterStatus, setFilterStatus] = useState<"all" | "completed" | "incomplete">("all");
-const [sortBy, setSortBy] = useState<"dateAdded" | "taskDate">("dateAdded");
+const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
 
   return (
     <div className="flex flex-col items-center p-8">
@@ -85,7 +85,7 @@ const [sortBy, setSortBy] = useState<"dateAdded" | "taskDate">("dateAdded");
           />
 
           <Dropdown
-            options={["dateAdded", "taskDate"]}
+            options={["date Added", "date Due"]}
             value={sortBy}
             onChange={(val) => setSortBy(val as typeof sortBy)}
           />
@@ -106,8 +106,8 @@ const [sortBy, setSortBy] = useState<"dateAdded" | "taskDate">("dateAdded");
                   return true;
                 })
                 .sort((a, b) => {
-                  if (sortBy === "dateAdded") return Number(b.id) - Number(a.id);
-                  if (sortBy === "taskDate") return a.date.localeCompare(b.date);
+                  if (sortBy === "date Added") return Number(b.id) - Number(a.id);
+                  if (sortBy === "date Due") return a.date.localeCompare(b.date);
                   return 0;
                 })
                 .map((entry) => (

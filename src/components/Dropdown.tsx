@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 
 interface DropdownProps<T extends string> {
   label?: string;
@@ -14,20 +14,38 @@ const Dropdown = <T extends string>({
   onChange,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const [buttonWidth, setButtonWidth] = useState<number | undefined>(undefined);
+
+  useLayoutEffect(() => {
+    if (textRef.current) {
+      const width = textRef.current.offsetWidth;
+      setButtonWidth(width + 32); // Add some padding
+    }
+  }, [value]);
 
   return (
     <div className="relative inline-block text-left">
       {label && <label className="block text-sm mb-1">{label}</label>}
 
+      {/* Invisible span to measure text width */}
+      <span
+        ref={textRef}
+        className="absolute opacity-0 pointer-events-none whitespace-nowrap"
+      >
+        {value[0].toUpperCase() + value.slice(1)}
+      </span>
+
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="bg-white text-black px-3 py-2 rounded-xl text-sm w-40 text-left hover:bg-gray-50"
+        className="bg-white border text-black px-3 py-2 rounded-xl text-sm text-left"
+        style={{ width: buttonWidth }}
       >
         {value[0].toUpperCase() + value.slice(1)}
       </button>
 
       {isOpen && (
-        <div className="absolute mt-1 w-40 rounded-xl bg-white z-10">
+        <div className="absolute mt-1 min-w-full rounded-xl bg-white z-10">
           {options.map((option) => (
             <button
               key={option}
@@ -35,7 +53,7 @@ const Dropdown = <T extends string>({
                 onChange(option);
                 setIsOpen(false);
               }}
-              className="block w-full text-left px-4 py-2 text-sm rounded-xl hover:bg-gray-50"
+              className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-100"
             >
               {option[0].toUpperCase() + option.slice(1)}
             </button>
