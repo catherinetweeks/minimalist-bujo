@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { type Entry } from "../types";
+import { useEffect } from "react";
+
+import { motion } from "motion/react";
 
 import Modal from "../components/Modal";
 import TaskEditor from "../components/TaskEditor";
@@ -11,51 +14,47 @@ import addEntry from "../assets/addEntry.svg";
 const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-const handleSaveEntry = (entry: Entry) => {
-  setEntries((prev) => {
-    const exists = prev.find((e) => e.id === entry.id);
-    return exists
-      ? prev.map((e) => (e.id === entry.id ? entry : e))
-      : [...prev, entry];
+  const handleSaveEntry = (entry: Entry) => {
+    setEntries((prev) => {
+      const exists = prev.find((e) => e.id === entry.id);
+      return exists
+        ? prev.map((e) => (e.id === entry.id ? entry : e))
+        : [...prev, entry];
+    });
+    setIsModalOpen(false);
+    setEditingEntry(null);
+  };
+
+  const handleEditEntry = (entry: Entry) => {
+    setEditingEntry(entry);
+    setIsModalOpen(true);
+  };
+
+  const handleAddTask = () => {
+    setEditingEntry({
+      id: Date.now().toString(),
+      title: "",
+      description: "",
+      date: "",
+      type: "task",
+      completed: false,
+    });
+    setIsModalOpen(true);
+  };
+
+  const [entries, setEntries] = useState<Entry[]>(() => {
+    const saved = localStorage.getItem("entries");
+    return saved ? JSON.parse(saved) : [];
   });
-  setIsModalOpen(false);
-  setEditingEntry(null);
-};
+  const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
 
-const handleEditEntry = (entry: Entry) => {
-  setEditingEntry(entry);
-  setIsModalOpen(true);
-};
+  // for sorting and filters
+  const [filterStatus, setFilterStatus] = useState<"all" | "completed" | "incomplete">("all");
+  const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
 
-const handleAddTask = () => {
-  setEditingEntry({
-    id: Date.now().toString(),
-    title: "",
-    description: "",
-    date: "",
-    type: "task",
-    completed: false,
-  });
-  setIsModalOpen(true);
-};
-
-// const handleAddNote = () => {
-//   setEditingEntry({
-//     id: Date.now().toString(),
-//     title: "",
-//     description: "",
-//     date: "",
-//     type: "note",
-//   });
-//   setIsModalOpen(true);
-// };
-
-const [entries, setEntries] = useState<Entry[]>([]);
-const [editingEntry, setEditingEntry] = useState<Entry | null>(null);
-
-// for sorting and filters
-const [filterStatus, setFilterStatus] = useState<"all" | "completed" | "incomplete">("all");
-const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
+  useEffect(() => {
+  localStorage.setItem("entries", JSON.stringify(entries));
+  }, [entries]);
 
   return (
     <div className="flex flex-col items-center p-8">
@@ -78,7 +77,8 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
       </div>
       <div className="flex justify-start p-3 w-full max-w-lg appearance-none">
         {entries.length === 0 ? ( <div></div>
-        ) :  (<div className="flex justify-between mb-4 gap-4">
+        ) :  (
+        <div className="flex justify-between mb-4 gap-4">
           <Dropdown
             options={["all", "completed", "incomplete"]}
             value={filterStatus}

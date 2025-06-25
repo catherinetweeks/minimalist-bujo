@@ -59,7 +59,7 @@ const Dropdown = <T extends string>({
       </span>
 
       <button
-        className="bg-white border text-black px-3 py-2 rounded-xl text-sm text-left"
+        className="bg-white hover:bg-gray-50 border text-black px-3 py-2 rounded-xl text-sm text-left"
         style={{ width: buttonWidth }}
       >
         {value[0].toUpperCase() + value.slice(1)}
