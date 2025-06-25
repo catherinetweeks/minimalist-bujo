@@ -60,7 +60,7 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
   return (
     <div className="flex flex-col items-center p-8">
       <div className="flex flex-row items-center gap-2 p-6 mt-5">
-        <h1 className="text-5xl mb-5 mt-2 font-titleFont hover:-translate-y-0.5 transition-all">
+        <h1 className="text-6xl mb-5 mt-2 font-titleFont hover:-translate-y-0.5 transition-all">
           Your Entries
         </h1>
         <div className="relative">
@@ -77,7 +77,8 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
         </div>
       </div>
       <div className="flex justify-start p-3 w-full max-w-lg appearance-none">
-        <div className="flex justify-between mb-4 gap-4">
+        {entries.length === 0 ? ( <div></div>
+        ) :  (<div className="flex justify-between mb-4 gap-4">
           <Dropdown
             options={["all", "completed", "incomplete"]}
             value={filterStatus}
@@ -89,7 +90,10 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
             value={sortBy}
             onChange={(val) => setSortBy(val as typeof sortBy)}
           />
-        </div>
+        </div>)
+        
+      }
+
       </div>
         <div className="w-full max-w-lg mb-8">
           {entries.length === 0 ? (
