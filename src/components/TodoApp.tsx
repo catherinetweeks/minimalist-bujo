@@ -60,7 +60,7 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
   return (
     <div className="flex flex-col items-center p-8">
       <div className="flex flex-row items-center gap-2 p-6 mt-5">
-        <h1 className="text-6xl mb-5 mt-2 font-titleFont hover:-translate-y-0.5 transition-all">
+        <h1 className="text-5xl mb-5 mt-2 font-titleFont hover:-translate-y-0.5 transition-all">
           Your Entries
         </h1>
         <div className="relative">
@@ -90,9 +90,8 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
             value={sortBy}
             onChange={(val) => setSortBy(val as typeof sortBy)}
           />
-        </div>)
-        
-      }
+        </div>
+        )}
 
       </div>
         <div className="w-full max-w-lg mb-8">
@@ -193,7 +192,7 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
                   prev ? { ...prev, type: "task", completed: false } : prev
                 )
               }
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 rounded-xl ${
                 editingEntry?.type === "task"
                   ? "bg-black text-white"
                   : "bg-white text-black"
@@ -207,7 +206,7 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
                   prev ? { ...prev, type: "note" } : prev
                 )
               }
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 rounded-xl ${
                 editingEntry?.type === "note"
                   ? "bg-black text-white"
                   : "bg-white text-black"
