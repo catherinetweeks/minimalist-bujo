@@ -53,7 +53,7 @@ const Dropdown = <T extends string>({
                 onChange(option);
                 setIsOpen(false);
               }}
-              className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-100"
+              className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-50"
             >
               {option[0].toUpperCase() + option.slice(1)}
             </button>

@@ -76,8 +76,8 @@ const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
           </button>
         </div>
       </div>
-      <div className="flex justify-between mb-4 w-full max-w-xs p-3 appearance-none">
-        <div className="flex justify-between mb-4 w-full max-w-lg gap-4">
+      <div className="flex justify-start p-3 w-full max-w-lg appearance-none">
+        <div className="flex justify-between mb-4 gap-4">
           <Dropdown
             options={["all", "completed", "incomplete"]}
             value={filterStatus}
