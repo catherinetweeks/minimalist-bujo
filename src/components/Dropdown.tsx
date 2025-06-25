@@ -17,6 +17,8 @@ const Dropdown = <T extends string>({
   const textRef = useRef<HTMLSpanElement>(null);
   const [buttonWidth, setButtonWidth] = useState<number | undefined>(undefined);
 
+const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useLayoutEffect(() => {
     if (textRef.current) {
       const width = textRef.current.offsetWidth;
@@ -25,10 +27,20 @@ const Dropdown = <T extends string>({
   }, [value]);
 
   return (
-    <div className="relative inline-block text-left">
+    <div 
+    className="relative inline-block text-left"
+    onMouseEnter={() => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsOpen(true);
+    }}
+    onMouseLeave={() => {
+        timeoutRef.current = setTimeout(() => {
+            setIsOpen(false);
+        }, 100);
+    }}>
       {label && <label className="block text-sm mb-1">{label}</label>}
 
-      {/* Invisible span to measure text width */}
+      {/* invisible span that measures text width */}
       <span
         ref={textRef}
         className="absolute opacity-0 pointer-events-none whitespace-nowrap"
@@ -36,28 +48,27 @@ const Dropdown = <T extends string>({
         {value[0].toUpperCase() + value.slice(1)}
       </span>
 
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="bg-white border text-black px-3 py-2 rounded-xl text-sm text-left"
-        style={{ width: buttonWidth }}
-      >
-        {value[0].toUpperCase() + value.slice(1)}
-      </button>
+        <button
+            className="bg-white border text-black px-3 py-2 rounded-xl text-sm text-left"
+            style={{ width: buttonWidth }}
+        >
+            {value[0].toUpperCase() + value.slice(1)}
+        </button>
 
-      {isOpen && (
-        <div className="absolute mt-1 min-w-full rounded-xl bg-white z-10">
-          {options.map((option) => (
-            <button
-              key={option}
-              onClick={() => {
-                onChange(option);
-                setIsOpen(false);
-              }}
-              className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-50"
-            >
-              {option[0].toUpperCase() + option.slice(1)}
-            </button>
-          ))}
+        {isOpen && (
+            <div className="absolute mt-1 min-w-full rounded-xl bg-white z-10">
+            {options.map((option) => (
+                <button
+                key={option}
+                onClick={() => {
+                    onChange(option);
+                    setIsOpen(false);
+                }}
+                className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-50"
+                >
+                {option[0].toUpperCase() + option.slice(1)}
+                </button>
+            ))}
         </div>
       )}
     </div>
