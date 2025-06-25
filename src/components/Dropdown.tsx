@@ -14,33 +14,43 @@ const Dropdown = <T extends string>({
   onChange,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
-  const textRef = useRef<HTMLSpanElement>(null);
   const [buttonWidth, setButtonWidth] = useState<number | undefined>(undefined);
 
-const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const openTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useLayoutEffect(() => {
     if (textRef.current) {
       const width = textRef.current.offsetWidth;
-      setButtonWidth(width + 32); // Add some padding
+      setButtonWidth(width + 32); // padding
     }
   }, [value]);
 
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+
+    openTimeoutRef.current = setTimeout(() => {
+      setIsOpen(true);
+    }, 200); // delay opening
+  };
+
+  const handleMouseLeave = () => {
+    if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
+
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsOpen(false);
+    }, 150); // delay closing
+  };
+
   return (
-    <div 
-    className="relative inline-block text-left"
-    onMouseEnter={() => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setIsOpen(true);
-    }}
-    onMouseLeave={() => {
-        timeoutRef.current = setTimeout(() => {
-            setIsOpen(false);
-        }, 100);
-    }}>
+    <div
+      className="relative inline-block text-left"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {label && <label className="block text-sm mb-1">{label}</label>}
 
-      {/* invisible span that measures text width */}
       <span
         ref={textRef}
         className="absolute opacity-0 pointer-events-none whitespace-nowrap"
@@ -48,27 +58,27 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
         {value[0].toUpperCase() + value.slice(1)}
       </span>
 
-        <button
-            className="bg-white border text-black px-3 py-2 rounded-xl text-sm text-left"
-            style={{ width: buttonWidth }}
-        >
-            {value[0].toUpperCase() + value.slice(1)}
-        </button>
+      <button
+        className="bg-white border text-black px-3 py-2 rounded-xl text-sm text-left"
+        style={{ width: buttonWidth }}
+      >
+        {value[0].toUpperCase() + value.slice(1)}
+      </button>
 
-        {isOpen && (
-            <div className="absolute mt-1 min-w-full rounded-xl bg-white z-10">
-            {options.map((option) => (
-                <button
-                key={option}
-                onClick={() => {
-                    onChange(option);
-                    setIsOpen(false);
-                }}
-                className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-50"
-                >
-                {option[0].toUpperCase() + option.slice(1)}
-                </button>
-            ))}
+      {isOpen && (
+        <div className="absolute mt-1 min-w-full rounded-xl bg-white border z-10 shadow-sm">
+          {options.map((option) => (
+            <button
+              key={option}
+              onClick={() => {
+                onChange(option);
+                setIsOpen(false);
+              }}
+              className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-50"
+            >
+              {option[0].toUpperCase() + option.slice(1)}
+            </button>
+          ))}
         </div>
       )}
     </div>
