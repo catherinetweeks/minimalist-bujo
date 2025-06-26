@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type Entry } from "../types";
 import { useEffect } from "react";
 
-import { motion } from "motion/react";
+// import { motion } from "motion/react";
 
 import Modal from "../components/Modal";
 import TaskEditor from "../components/TaskEditor";
