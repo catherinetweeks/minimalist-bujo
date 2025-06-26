@@ -62,10 +62,10 @@ const HomePage = () => {
         <h1 className="text-5xl mb-5 mt-2 font-titleFont hover:-translate-y-0.5 transition-all">
           Your Entries
         </h1>
-        <div className="relative">
+        <div className="relative flex-none shrink-0">
           <button
             onClick={() => handleAddTask()}
-            className="mb-2 p-2 bg-white text-black rounded flex items-center justify-center w-15 h-15 shrink-0"
+            className="mb-2 p-2 bg-white text-black rounded flex items-center justify-center w-15 h-15"
           >
             <img
               src={addEntry}
