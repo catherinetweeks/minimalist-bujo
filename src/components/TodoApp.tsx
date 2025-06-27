@@ -52,6 +52,16 @@ const HomePage = () => {
   const [filterStatus, setFilterStatus] = useState<"all" | "completed" | "incomplete">("all");
   const [sortBy, setSortBy] = useState<"date Added" | "date Due">("date Added");
 
+  // for formatting the date on the main view
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+
   useEffect(() => {
   localStorage.setItem("entries", JSON.stringify(entries));
   }, [entries]);
@@ -177,7 +187,7 @@ const HomePage = () => {
                             : "text-gray-400"
                         }`}
                       >
-                        {entry.date}
+                        {formatDate(entry.date)}
                       </p>
                     </div>
                   </div>
