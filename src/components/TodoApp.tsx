@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type Entry } from "../types";
 import { useEffect } from "react";
 
-// import { motion } from "motion/react";
+import { motion } from "motion/react";
 
 import Modal from "../components/Modal";
 import TaskEditor from "../components/TaskEditor";
@@ -59,10 +59,14 @@ const HomePage = () => {
   return (
     <div className="flex flex-col items-center p-8">
       <div className="flex flex-row items-center gap-2 p-6 mt-5">
-        <h1 className="text-5xl mb-5 mt-2 font-titleFont hover:-translate-y-0.5 transition-all">
+        <h1 className="text-5xl mb-5 mt-2 font-titleFont cursor-default">
           Your Entries
         </h1>
-        <div className="relative flex-none shrink-0">
+        <motion.div 
+          className="relative flex-none shrink-0"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.9 }}
+        >
           <button
             onClick={() => handleAddTask()}
             className="mb-2 p-2 bg-white text-black rounded flex items-center justify-center w-15 h-15"
@@ -73,7 +77,7 @@ const HomePage = () => {
               className="w-9 h-9 object-contain pointer-events-none hover:-translate-y-0.5 transition-all"
             />
           </button>
-        </div>
+        </motion.div>
       </div>
       <div className="flex justify-start p-3 w-full max-w-lg appearance-none">
         {entries.length === 0 ? ( <div></div>
@@ -186,7 +190,7 @@ const HomePage = () => {
         {/* Toggle only appears for new entries (not edits) */}
         {editingEntry && !entries.find((e) => e.id === editingEntry.id) && (
           <div className="flex justify-center gap-2 mb-4">
-            <button
+            <motion.button
               onClick={() =>
                 setEditingEntry((prev) =>
                   prev ? { ...prev, type: "task", completed: false } : prev
@@ -197,10 +201,12 @@ const HomePage = () => {
                   ? "bg-black text-white"
                   : "bg-white text-black"
               }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.9 }}
             >
               Task
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() =>
                 setEditingEntry((prev) =>
                   prev ? { ...prev, type: "note" } : prev
@@ -211,9 +217,11 @@ const HomePage = () => {
                   ? "bg-black text-white"
                   : "bg-white text-black"
               }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.9 }}
             >
               Note
-            </button>
+            </motion.button>
           </div>
         )}
 

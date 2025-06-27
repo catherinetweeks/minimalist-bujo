@@ -44,7 +44,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
             />
             {/* modal */}
             <motion.div 
-              className="bg-white p-6 rounded-xl w-full max-w-md relative z-10"
+              className="bg-white p-6 rounded-xl w-full max-w-lg relative z-10"
               variants={modalVariants}
               initial="hidden"
               animate="visible"

@@ -1,11 +1,12 @@
 import { useState, useRef, useLayoutEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface DropdownProps<T extends string> {
   label?: string;
   options: T[];
   value: T;
   onChange: (value: T) => void;
-}
+};
 
 const Dropdown = <T extends string>({
   label,
@@ -65,22 +66,30 @@ const Dropdown = <T extends string>({
         {value[0].toUpperCase() + value.slice(1)}
       </button>
 
-      {isOpen && (
-        <div className="absolute mt-1 min-w-full rounded-xl bg-white border z-10 shadow-sm">
-          {options.map((option) => (
-            <button
-              key={option}
-              onClick={() => {
-                onChange(option);
-                setIsOpen(false);
-              }}
-              className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-50"
-            >
-              {option[0].toUpperCase() + option.slice(1)}
-            </button>
-          ))}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="absolute mt-1 min-w-full rounded-xl bg-white border z-10 shadow-sm origin-top"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            {options.map((option) => (
+              <button
+                key={option}
+                onClick={() => {
+                  onChange(option);
+                  setIsOpen(false);
+                }}
+                className="block w-full text-left px-4 py-2 rounded-xl text-sm hover:bg-gray-50"
+              >
+                {option[0].toUpperCase() + option.slice(1)}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
