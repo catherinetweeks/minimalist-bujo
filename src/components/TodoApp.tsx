@@ -180,6 +180,7 @@ const HomePage = () => {
                       >
                         {entry.description}
                       </p>
+                      {entry.date &&
                       <p
                         className={`text-xs ${
                           entry.type === "task" && entry.completed
@@ -188,7 +189,7 @@ const HomePage = () => {
                         }`}
                       >
                         {formatDate(entry.date)}
-                      </p>
+                      </p>}
                     </div>
                   </div>
                 ))}
