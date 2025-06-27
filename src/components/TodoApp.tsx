@@ -102,6 +102,7 @@ const HomePage = () => {
           ) : (
             <>
               {entries
+              // filter and sort entries
                 .filter((entry) => {
                   if (filterStatus === "all") return true;
                   if (entry.type === "task" && filterStatus === "completed") return entry.completed;
