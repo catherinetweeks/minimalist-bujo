@@ -103,10 +103,9 @@ const HomePage = () => {
             <>
               {entries
                 .filter((entry) => {
-                  if (entry.type !== "task") return true;
-                  if (filterStatus === "completed") return entry.completed;
-                  if (filterStatus === "incomplete") return !entry.completed;
-                  return true;
+                  if (filterStatus === "all") return true;
+                  if (entry.type === "task" && filterStatus === "completed") return entry.completed;
+                  if (entry.type === "task" && filterStatus === "incomplete") return !entry.completed;
                 })
                 .sort((a, b) => {
                   if (sortBy === "date Added") return Number(b.id) - Number(a.id);
